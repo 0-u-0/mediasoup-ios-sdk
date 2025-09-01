@@ -46,14 +46,17 @@ internal class Room{
 
         peer.onOpen = {
             print("Connected!")
-            peer.request(method: "getRouterRtpCapabilities", data: [:]) { result in
-                switch result {
-                case .success(let data):
-                    print("Response data:", data)
-                case .failure(let error):
-                    print("Request failed:", error)
+            Task {
+                do {
+                    let response = try await peer.request(method: "getRouterRtpCapabilities", data: [:])
+                    await self.device.load(routerRtpCapabilities: response)
+                    
+//                    print("response:", response)
+                } catch {
+                    print("request failed:", error)
                 }
             }
+
         }
 
         peer.onNotification = { notification in

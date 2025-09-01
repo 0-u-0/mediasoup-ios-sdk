@@ -256,3 +256,18 @@ class ProtooPeer {
         }
     }
 }
+
+extension ProtooPeer {
+    func request(method: String, data: [String: AnyCodable]) async throws -> [String: AnyCodable] {
+        return try await withCheckedThrowingContinuation { continuation in
+            self.request(method: method, data: data) { result in
+                switch result {
+                case .success(let responseData):
+                    continuation.resume(returning: responseData)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+}
