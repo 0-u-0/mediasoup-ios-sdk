@@ -13,6 +13,7 @@
 		B34115122D8F9D6800C05F4A /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34115112D8F9D6800C05F4A /* Network.framework */; };
 		B3DA71BD2E53260C00FFB4F4 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B3DA71BC2E53260C00FFB4F4 /* Starscream */; };
 		B3DA71CC2E654A3D00FFB4F4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B3DA71CB2E654A1100FFB4F4 /* .gitignore */; };
+		B3DA71CE2E654AFB00FFB4F4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B3DA71CD2E654AF500FFB4F4 /* README.md */; };
 		B3F804F12E4F069700B858F3 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F804F02E4F069700B858F3 /* WebRTC.xcframework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		B341150F2D8F9D5C00C05F4A /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		B34115112D8F9D6800C05F4A /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/Network.framework; sourceTree = DEVELOPER_DIR; };
 		B3DA71CB2E654A1100FFB4F4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B3DA71CD2E654AF500FFB4F4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B3F804F02E4F069700B858F3 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = WebRTC.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +78,7 @@
 		B341148E2D8F14AD00C05F4A = {
 			isa = PBXGroup;
 			children = (
+				B3DA71CD2E654AF500FFB4F4 /* README.md */,
 				B3DA71CB2E654A1100FFB4F4 /* .gitignore */,
 				B3F804F02E4F069700B858F3 /* WebRTC.xcframework */,
 				B341149A2D8F14AD00C05F4A /* sdk */,
@@ -211,6 +214,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3DA71CE2E654AFB00FFB4F4 /* README.md in Resources */,
 				B3DA71CC2E654A3D00FFB4F4 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
