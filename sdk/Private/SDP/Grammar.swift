@@ -162,7 +162,7 @@ class Grammar{
                 reg: try! NSRegularExpression(pattern: #"^rtpmap:(\d*) ([^/]*)(?:/(\d*)(?:/(\S*))?)?"#),
                 names: ["payload", "codec", "rate", "encoding"],
                 types: ["d", "s", "d", "s"],
-                format: "rtpmap:%d %s/%d/%s",
+                format: "",
                 formatFunc: { o in
                     if o["encoding"] != nil {
                         return "rtpmap:%d %s/%d/%s"
@@ -260,6 +260,30 @@ class Grammar{
                 names: ["msid", "appdata"],
                 types: ["s","s"],
                 format: "msid:%s %s"
+            ),
+            Grammar(
+                name: "iceUfrag",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^ice-ufrag:(\S*)"#),
+                names: [],
+                types: ["s"],
+                format: "ice-ufrag:%s"
+            ),
+            Grammar(
+                name: "icePwd",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^ice-pwd:(\S*)"#),
+                names: [],
+                types: ["s"],
+                format: "ice-pwd:%s"
+            ),
+            Grammar(
+                name: "iceOptions",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^ice-options:(\S*)"#),
+                names: [],
+                types: ["s"],
+                format: "ice-options:%s"
             )
         ]
     ]
