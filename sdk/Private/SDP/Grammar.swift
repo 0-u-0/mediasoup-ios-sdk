@@ -284,7 +284,77 @@ class Grammar{
                 names: [],
                 types: ["s"],
                 format: "ice-options:%s"
-            )
+            ),
+            Grammar(
+                name: "groups",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^group:(\w*) (.*)"#),
+                names: ["type", "mids"],
+                types: ["s", "s"],
+                format: "group:%s %s"
+            ),
+            Grammar(
+                name: "extmapAllowMixed",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^(extmap-allow-mixed)"#),
+                names: [],
+                types: ["s"],
+                format: "%s"
+            ),
+            Grammar(
+                name: "msidSemantic",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^msid-semantic:\s?(\w*) (\S*)"#),
+                names: [ "semantic", "token" ],
+                types: ["s", "s"],
+                format: "msid-semantic: %s %s"
+            ),
+            Grammar(
+                name: "fingerprint",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^fingerprint:(\S*) (\S*)"#),
+                names: [ "type", "hash" ],
+                types: ["s", "s"],
+                format: "fingerprint:%s %s"
+            ),
+            Grammar(
+                name: "setup",
+                push: "",
+                reg: try! NSRegularExpression(pattern: #"^setup:(\w*)"#),
+                names: [],
+                types: ["s",],
+                format: "setup:%s"
+            ),
+            Grammar(
+                name: "",
+                push: "ext",
+                reg: try! NSRegularExpression(
+                    pattern: #"^extmap:(\d+)(?:/(\w+))?(?: (urn:ietf:params:rtp-hdrext:encrypt))? (\S*)(?: (\S*))?"#
+                ),
+                names: ["value", "direction", "encrypt-uri", "uri", "config"],
+                types: ["d", "s", "s", "s", "s"],
+                format: "",
+                formatFunc: { o in
+                    var str = "extmap:%d"
+                    if o["direction"] != nil {
+                        str += "/%s"
+                    } else{
+                        str += "%v"
+                    }
+                    if o["encrypt-uri"] != nil {
+                        str += " %s"
+                    } else{
+                        str += "%v"
+                    }
+                    str += " %s"
+                    if o["config"] != nil {
+                        str += " %s"
+                    } else{
+                        str += "%v"
+                    }
+                    return str
+                }
+            ),
         ]
     ]
 
