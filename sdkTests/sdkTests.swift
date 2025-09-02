@@ -6,12 +6,27 @@
 //
 
 import Testing
+import Foundation
+
 @testable import sdk
 
 struct sdkTests {
 
     @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+
+        let text = "rtpmap:111 opus/48000/2"
+        let pattern = #"^rtpmap:(\d*) ([^/]*)(?:/(\d*)(?:/(\S*))?)?"#
+
+        if let regex = try? NSRegularExpression(pattern: pattern) {
+            if let match = regex.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)) {
+                print("match \(match.numberOfRanges)")
+                for i in 0..<match.numberOfRanges {
+                    if let range = Range(match.range(at: i), in: text) {
+                        print("Group \(i):", text[range])
+                    }
+                }
+            }
+        }
     }
 
 }

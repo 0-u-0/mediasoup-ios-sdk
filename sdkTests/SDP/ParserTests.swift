@@ -121,7 +121,9 @@ final class ParserTests: XCTestCase {
     func testAdd() {
         let session = Parser.parse(text)
         let sdp = Writer.write(session: session)
-        print("sdp \(sdp)")
+        
+        print(session.toJSONString(prettyPrinted: true)!)
+        print(sdp)
 //        let result = calc.add(2, 3)
 //        XCTAssertEqual(result, 5, "2 + 3 应该等于 5")
         

@@ -157,7 +157,7 @@ class Grammar{
         ],
         "a": [
             Grammar(
-                name: "rtpmap",
+                name: "",
                 push: "rtp",
                 reg: try! NSRegularExpression(pattern: #"^rtpmap:(\d*) ([^/]*)(?:/(\d*)(?:/(\S*))?)?"#),
                 names: ["payload", "codec", "rate", "encoding"],

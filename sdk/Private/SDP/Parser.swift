@@ -59,14 +59,22 @@ class Parser{
         // 确保容器存在
         if !rule.push.isEmpty, location[rule.push] == nil {
             location[rule.push] = [[String: Any]]()
+            print("push \(rule.push)")
         } else if needsBlank, location[rule.name] == nil {
             location[rule.name] = [String: Any]()
+            print("name \(rule.name)")
         }
 
         // 正则匹配
         let fullRange = NSRange(content.startIndex..<content.endIndex, in: content)
+
         guard let match = rule.reg.firstMatch(in: content, options: [], range: fullRange) else { return }
 
+        if content.contains("rtpmap") && rule.name == "rtpmap" {
+            print(content)
+//            print("match \(match.numberOfRanges)")
+        }
+        
         // 选择“工作副本”
         var keyLocation: [String: Any]
         if !rule.push.isEmpty {
