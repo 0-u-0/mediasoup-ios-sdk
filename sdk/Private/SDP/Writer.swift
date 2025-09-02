@@ -22,11 +22,11 @@ class Writer{
                 if !rule.push.isEmpty {
                     format = funcBlock(location)
                 } else if !rule.name.isEmpty,
-                          let sub = location[rule.name] {
-                    format = funcBlock(sub)
-                } else {
-                    format = funcBlock(location)
-                }
+                    let sub = location[rule.name] {
+                        format = funcBlock(sub as! [String : Any])
+                    } else {
+                        format = funcBlock(location)
+                    }
             } else {
                 format = ""
             }

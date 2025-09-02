@@ -27,8 +27,10 @@ class Handler: NSObject,RTCPeerConnectionDelegate{
         let constraints2 = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
 
         let sdp = try! await pc!.offer(for: constraints2)
+        print(sdp)
         let session = Parser.parse(sdp.description)
-        
+        let n_sdp = Writer.write(session: session)
+//        print(n_sdp)
     }
     
     //

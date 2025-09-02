@@ -64,9 +64,8 @@ class Parser{
         }
 
         // 正则匹配
-        guard let regex = rule.reg else { return }
         let fullRange = NSRange(content.startIndex..<content.endIndex, in: content)
-        guard let match = regex.firstMatch(in: content, options: [], range: fullRange) else { return }
+        guard let match = rule.reg.firstMatch(in: content, options: [], range: fullRange) else { return }
 
         // 选择“工作副本”
         var keyLocation: [String: Any]
@@ -136,9 +135,8 @@ class Parser{
             }
 
             for rule in rules {
-                if let regex = rule.reg {
                     let r = NSRange(location: 0, length: content.utf16.count)
-                    if regex.firstMatch(in: content, options: [], range: r) != nil {
+                    if rule.reg.firstMatch(in: content, options: [], range: r) != nil {
                         if type == "m" || !media.isEmpty {
                             // 操作最后一个 media
                             var last = media.removeLast()
@@ -150,7 +148,7 @@ class Parser{
                         }
                         break
                     }
-                }
+            
             }
         }
 
