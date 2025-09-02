@@ -147,8 +147,8 @@ class Grammar{
         ],
         "m": [
             Grammar(
-                name: "media",
-                push: "media",
+                name: "",
+                push: "",
                 reg: try! NSRegularExpression(pattern: #"^(\w*) (\d*) ([\w/]*)(?: (.*))?"#),
                 names: ["type", "port", "protocol", "payloads"],
                 types: ["s", "u", "s", "s"],
@@ -223,7 +223,7 @@ class Grammar{
                 }
             ),
             Grammar(
-                name: "ssrc",
+                name: "",
                 push: "ssrcs",
                 reg: try! NSRegularExpression(pattern: #"^ssrc:(\d*) ([^:]*)(?::(.*))?"#),
                 names: ["id", "attribute", "value"],
