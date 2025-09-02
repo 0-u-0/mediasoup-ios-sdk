@@ -174,7 +174,7 @@ class Grammar{
                 }
             ),
             Grammar(
-                name: "fmtp",
+                name: "",
                 push: "fmtp",
                 reg: try! NSRegularExpression(pattern: #"^fmtp:(\d*) ([\S| ]*)"#),
                 names: ["payload", "config"],
@@ -227,13 +227,13 @@ class Grammar{
                 push: "ssrcs",
                 reg: try! NSRegularExpression(pattern: #"^ssrc:(\d*) ([^:]*)(?::(.*))?"#),
                 names: ["id", "attribute", "value"],
-                types: ["u","s","s"],
-                format: "ssrc:%u %s:%s",
+                types: ["d","s","s"],
+                format: "",
                 formatFunc: { o in
                     if o["value"] != nil {
-                        return "ssrc:%u %s:%s"
+                        return "ssrc:%d %s:%s"
                     } else {
-                        return "ssrc:%u %s"
+                        return "ssrc:%d %s"
                     }
                 }
             ),
