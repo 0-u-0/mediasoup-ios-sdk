@@ -10,7 +10,7 @@
 class Handler: NSObject,RTCPeerConnectionDelegate{
     
     
-    func getNativeRtpCapabilities () async{
+    func getNativeRtpCapabilities () async -> [String: Any]{
         let decoderFactory = RTCDefaultVideoDecoderFactory()
         let encoderFactory = RTCDefaultVideoEncoderFactory()
         let factory = RTCPeerConnectionFactory(encoderFactory: encoderFactory, decoderFactory: decoderFactory)
@@ -27,10 +27,12 @@ class Handler: NSObject,RTCPeerConnectionDelegate{
         let constraints2 = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
 
         let sdp = try! await pc!.offer(for: constraints2)
-        print(sdp)
+//        print(sdp.description)
         let session = Parser.parse(sdp.description)
-        let n_sdp = Writer.write(session: session)
-//        print(n_sdp)
+//        print("session \(session.toJSONString()!)")
+        let nativeRtpCapabilities = SdpUtils.extractRtpCapabilities(session)
+        
+        return nativeRtpCapabilities
     }
     
     //

@@ -59,10 +59,10 @@ class Parser{
         // 确保容器存在
         if !rule.push.isEmpty, location[rule.push] == nil {
             location[rule.push] = [[String: Any]]()
-            print("push \(rule.push)")
+//            print("push \(rule.push)")
         } else if needsBlank, location[rule.name] == nil {
             location[rule.name] = [String: Any]()
-            print("name \(rule.name)")
+//            print("name \(rule.name)")
         }
 
         // 正则匹配
@@ -71,7 +71,7 @@ class Parser{
         guard let match = rule.reg.firstMatch(in: content, options: [], range: fullRange) else { return }
 
         if content.contains("rtpmap") && rule.name == "rtpmap" {
-            print(content)
+//            print(content)
 //            print("match \(match.numberOfRanges)")
         }
         
@@ -113,7 +113,8 @@ class Parser{
         var session: [String: Any] = [:]
         var media: [[String: Any]] = []
 
-        let lines = sdp.split(separator: "\n", omittingEmptySubsequences: false)
+        let lines = sdp.split(separator: "\r\n", omittingEmptySubsequences: false)
+        
         for var line in lines {
             // 去掉结尾 \r
             if line.last == "\r" {
@@ -162,5 +163,73 @@ class Parser{
 
         session["media"] = media
         return session
+    }
+    
+    
+    // insertParam
+    static func insertParam(_ dict: inout [String: Any], _ str: String) {
+        // 正则: key[=value]
+        let pattern = #"^\s*([^= ]+)(?:\s*=\s*([^ ]+))?$"#
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return
+        }
+        
+        guard let match = regex.firstMatch(in: str, options: [], range: NSRange(str.startIndex..., in: str)) else {
+            return
+        }
+        
+        let keyRange = Range(match.range(at: 1), in: str)
+        let valueRange = Range(match.range(at: 2), in: str)
+        
+        guard let key = keyRange.map({ String(str[$0]) }) else { return }
+        let value = valueRange.map { String(str[$0]) } ?? ""
+        
+        // 对应 C++ 里的 WellKnownParameters
+        let wellKnownParameters: [String: Character] = [
+            "profile-level-id": "s",
+            "packetization-mode": "d",
+            "profile-id": "s"
+        ]
+        
+        let type: Character
+        if let knownType = wellKnownParameters[key] {
+            type = knownType
+        } else if isInt(value) {
+            type = "d"
+        } else if isFloat(value) {
+            type = "f"
+        } else {
+            type = "s"
+        }
+        
+        dict[key] = toType(value, type: type)
+    }
+    
+    // parseParams
+    static func parseParams(_ str: String) -> [String: Any] {
+        var obj = [String: Any]()
+        let parts = str.split(separator: ";")
+        
+        for part in parts {
+            let param = trim(String(part))
+            if param.isEmpty { continue }
+            insertParam(&obj, param)
+        }
+        
+        return obj
+    }
+    
+    static func trim(_ str: String) -> String {
+        return str.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    // 判断是不是 Int
+    static func isInt(_ str: String) -> Bool {
+        return Int(str) != nil
+    }
+
+    // 判断是不是 Float/Double
+    static func isFloat(_ str: String) -> Bool {
+        return Double(str) != nil
     }
 }

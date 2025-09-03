@@ -14,6 +14,16 @@ class Device {
         //1. check if is_load
         //2. ortc::validateRtpCapabilities(routerRtpCapabilities);
         let handler = Handler()
-        await handler.getNativeRtpCapabilities()
+        let nativeRtpCapabilities = await handler.getNativeRtpCapabilities()
+        print("native \(nativeRtpCapabilities.toJSONString()!)")
+        //3. ortc::validateRtpCapabilities(nativeRtpCapabilities);
+        let extendedRtpCapabilities = SdpUtils.getExtendedRtpCapabilities(localCaps: nativeRtpCapabilities,remoteCaps: routerRtpCapabilities)
+        
+        let recvRtpCapabilities = SdpUtils.getRecvRtpCapabilities(extendedRtpCapabilities)
+
+    }
+    
+    func createSendTransport(){
+        
     }
 }
